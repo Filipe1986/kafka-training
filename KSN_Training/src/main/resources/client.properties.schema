@@ -1,0 +1,49 @@
+#topics
+topic1=kafkastudent2-schemainput
+
+# Required connection configs
+security.protocol=SASL_SSL
+#sasl.mechanism=PLAIN
+
+##### kafka server
+#bootstrap.servers=pkc-921jm.us-east-2.aws.confluent.cloud:9092
+##### kafka security
+#sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='PMCS6N3Q6J2VLFT3' password='<ADD KAFKA SECRET>';
+
+##### pulsar server
+bootstrap.servers=pc-182d65af.aws-use2-production-snci-pool-kid.streamnative.aws.snio.cloud:9093
+##### pulsar security oauth-kafkastudent2
+sasl.mechanism=OAUTHBEARER
+sasl.login.callback.handler.class=io.streamnative.pulsar.handlers.kop.security.oauth.OauthLoginCallbackHandler
+sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule \
+  required oauth.issuer.url="https://auth.streamnative.cloud/" \
+  oauth.credentials.url="src/main/resources/o-qmcug-kafkastudent2.json" \
+  tenant="public" \
+  oauth.audience="urn:sn:pulsar:o-qmcug:train";
+
+# Required for correctness in Apache Kafka clients prior to 2.6
+client.dns.lookup=use_all_dns_ips
+
+# Best practice for higher availability in Apache Kafka clients prior to 3.0
+session.timeout.ms=45000
+
+# Best practice for Kafka producer to prevent data loss
+acks=all
+
+key.serializer=org.apache.kafka.common.serialization.StringSerializer
+value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer
+key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+value.deserializer=io.confluent.kafka.serializers.KafkaAvroDeserializer
+
+# Required connection configs for Kafka Schema Registry
+basic.auth.credentials.source=USER_INFO
+#bearer.auth.credentials.source=CUSTOM
+
+##### kafka schema endpoint and security
+#schema.registry.url=https://psrc-yorrp.us-east-2.aws.confluent.cloud
+#basic.auth.user.info=TMUBBOD3C7U7BXFJ:<ADD KAFKA SECRET>
+
+##### pulsar schema endpoint and security
+schema.registry.url=https://pc-182d65af.aws-use2-production-snci-pool-kid.streamnative.aws.snio.cloud/kafka
+basic.auth.user.info=public:<PASTE TOKEN HERE>
+#bearer.auth.custom.provider.class=io.streamnative.pulsar.handlers.kop.security.oauth.schema.OauthCredentialProvider

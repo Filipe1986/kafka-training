@@ -1,0 +1,30 @@
+#topics
+topic1=kafkastudent2/georep/sharedtopic
+
+# Required connection configs
+security.protocol=SASL_SSL
+sasl.mechanism=PLAIN
+
+##### kafka server
+#bootstrap.servers=pkc-921jm.us-east-2.aws.confluent.cloud:9092
+##### kafka security
+#sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='PMCS6N3Q6J2VLFT3' password='<ADD KAFKA SECRET>';
+
+##### pulsar server
+bootstrap.servers=pc-182d65af.aws-use2-production-snci-pool-kid.streamnative.aws.snio.cloud:9093
+##### pulsar security jwt-kafkastudent2
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='public/default' password='token:<PASTE TOKEN HERE>';
+
+# Required for correctness in Apache Kafka clients prior to 2.6
+client.dns.lookup=use_all_dns_ips
+
+# Best practice for higher availability in Apache Kafka clients prior to 3.0
+session.timeout.ms=45000
+
+# Best practice for Kafka producer to prevent data loss
+acks=all
+
+key.serializer=org.apache.kafka.common.serialization.StringSerializer
+value.serializer=org.apache.kafka.common.serialization.StringSerializer
+key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
